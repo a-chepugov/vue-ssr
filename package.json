@@ -1,0 +1,51 @@
+{
+	"name": "vue-ssr",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1",
+		"webpack:client:development": "NODE_ENV=development webpack --config webpack --env.target=client --env.clean=true --progress --hide-modules",
+		"webpack:server:development": "NODE_ENV=development webpack --config webpack --env.target=server --env.clean=true --progress --hide-modules",
+		"start:development": "NODE_ENV=development supervisor -i ./public index.js",
+		"webpack:client:production": "NODE_ENV=production webpack --config webpack --env.target=client --env.clean=true --progress --hide-modules",
+		"webpack:server:production": "NODE_ENV=production webpack --config webpack --env.target=server --env.clean=true --hide-modules",
+		"start:production": "NODE_ENV=production supervisor index.js"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/ccforward/vue-ssr.git"
+	},
+	"author": "",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/ccforward/vue-ssr/issues"
+	},
+	"homepage": "https://github.com/ccforward/vue-ssr#readme",
+	"dependencies": {
+		"babel-core": "^6.26.0",
+		"babel-loader": "^7.1.2",
+		"babel-plugin-transform-es2015-modules-commonjs": "^6.26.0",
+		"babel-polyfill": "^6.26.0",
+		"babel-preset-stage-0": "^6.24.1",
+		"clean-webpack-plugin": "^0.1.17",
+		"config": "^1.26.2",
+		"css-loader": "^0.28.7",
+		"express": "^4.16.1",
+		"vue": "^2.4.4",
+		"vue-loader": "^13.0.5",
+		"vue-router": "^2.7.0",
+		"vue-server-renderer": "^2.4.4",
+		"vue-template-compiler": "^2.4.4",
+		"vuex": "^2.4.1",
+		"vuex-router-sync": "^4.3.2",
+		"webpack": "^3.6.0",
+		"webpack-closure-compiler": "^2.1.5",
+		"webpack-merge": "^4.1.0"
+	},
+	"devDependencies": {
+		"write-file-webpack-plugin": "^4.2.0",
+		"webpack-dev-middleware": "^1.12.0",
+		"webpack-hot-middleware": "^2.19.1"
+	}
+}
