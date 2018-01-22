@@ -1,8 +1,24 @@
-<html>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/html" data-vue-meta-server-rendered {{{metaData.htmlAttrs}}}>
 <head>
-    <title>{{title}}</title>
+	<meta charset='utf-8' />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+	<link rel="shortcut icon" href="images/favicon.ico" />
+	<meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0" /><!--media="only screen and (max-width: 767px)"-->
+	<meta name="apple-mobile-web-app-capable" content="yes" />
+
+	<script type="text/javascript" src="https://css.riastatic.com/javascripts/init.js"></script>
+
+	{{{metaData.meta}}}
+	{{{metaData.title}}}
+	{{{metaData.link}}}
+	{{{metaData.style}}}
+	{{{metaData.script}}}
+	{{{metaData.noscript}}}
 </head>
-<body>
+
+<body {{{metaData.bodyAttrs}}}>
 <!--vue-ssr-outlet-->
+
 </body>
 </html>

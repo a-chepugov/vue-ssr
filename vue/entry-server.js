@@ -4,6 +4,7 @@ export default context => {
 	return new Promise((resolve, reject) => {
 		const {app, router, store} = createApp();
 		router.push(context.url);
+		context.meta = app.$meta();
 
 		router.onReady(() => {
 			const matchedComponents = router.getMatchedComponents();

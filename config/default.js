@@ -5,7 +5,7 @@ module.exports = {
 		bundles: {
 			client: 'public/',
 			server: 'server/',
-			template: 'vue/template.html',
-		}
+		},
+		template: 'vue/template.html',
 	}
 };
