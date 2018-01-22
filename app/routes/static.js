@@ -3,8 +3,8 @@ import config from 'config';
 import express from 'express';
 
 module.exports = function (app) {
-	let clientBundlePath = config.paths.bundles.client;
-	let clientBundleRealPath = path.resolve(__dirname, '../..', clientBundlePath);
-	app.use(`/${clientBundlePath}`, express.static(clientBundleRealPath));
-}
-
+	let clientBundlePath = config.webpack.bundles.client;
+	let clientBundleRealPath = path.resolve(clientBundlePath);
+	let urlPath = config.webpack.public;
+	app.use(urlPath, express.static(clientBundleRealPath));
+};

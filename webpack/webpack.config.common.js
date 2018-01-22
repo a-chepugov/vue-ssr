@@ -37,7 +37,7 @@ module.exports = function (env = {}) {
 	];
 
 	const projectPath = path.join(__dirname, '..');
-	const bundlePathName = config.paths.bundles[target];
+	const bundlePathName = config.webpack.bundles[target];
 
 	clean ?
 		plugins.push(CleanWebpackPlugin(projectPath, [bundlePathName])) :

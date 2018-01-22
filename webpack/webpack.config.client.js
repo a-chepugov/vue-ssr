@@ -12,7 +12,7 @@ const AggressiveSplittingPlugin = require('./plugins/AggressiveSplittingPlugin')
 const ClosureCompilerPlugin = require('./plugins/ClosureCompilerPlugin');
 
 const projectPath = path.join(__dirname, '..');
-const bundlePathName = config.paths.bundles.client;
+const bundlePathName = config.webpack.bundles.client;
 const outputPath = path.join(projectPath, bundlePathName);
 
 module.exports = function (env = {}) {
@@ -27,7 +27,7 @@ module.exports = function (env = {}) {
 	let {clean, target} = env;
 
 	const projectPath = path.join(__dirname, '..');
-	const bundlePathName = config.paths.bundles[target];
+	const bundlePathName = config.webpack.bundles[target];
 	const outputPath = path.join(projectPath, bundlePathName);
 
 	let plugins = [

@@ -7,7 +7,7 @@ const commonConfig = require('./webpack.config.common.js');
 const getDefaultValues = require('./getDefaultValues');
 
 const projectPath = path.join(__dirname, '..');
-const bundlePathName = config.paths.bundles.server;
+const bundlePathName = config.webpack.bundles.server;
 const outputPath = path.join(projectPath, bundlePathName);
 
 module.exports = function (env = {}) {
