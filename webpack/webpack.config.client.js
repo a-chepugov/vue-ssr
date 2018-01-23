@@ -21,6 +21,8 @@ module.exports = function (env = {}) {
 
 	let {clean, target} = env;
 
+	const __webpack_hmr = config.webpack.__webpack_hmr;
+	const heartbeat = config.webpack.heartbeat;
 	const bundlePathName = config.webpack.bundles.client;
 	const outputPath = path.resolve(bundlePathName);
 	const publicPath = config.webpack.public;
@@ -38,7 +40,7 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			entry.index.unshift('webpack-hot-middleware/client?path=/__webpack_hmr&timeout=20000');
+			entry.index.push(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}`);
 			plugins.push(new webpack.HotModuleReplacementPlugin());
 			break;
 		}
