@@ -1,5 +1,5 @@
 import Vue from 'vue';
-import App from './App.vue';
+import App from './App/index.vue';
 import createRouter from './router';
 import createStore from './store';
 import {sync} from 'vuex-router-sync';
@@ -12,12 +12,20 @@ Vue.use(Meta, {
 	tagIDKeyName: 'vmid' // the property name that vue-meta uses to determine whether to overwrite or append a tag
 });
 
+
+import mixinsGlobal from './mixins/global';
+import routeToLang from './mixins/routeToLang';
+import deviceChecker from './mixins/deviceChecker';
+
+Vue.mixin(mixinsGlobal);
+
 export default function createApp() {
 	const router = createRouter();
 	const store = createStore();
 
 	sync(store, router);
-	var app = new Vue({
+	let app = new Vue({
+		mixins: [routeToLang, deviceChecker],
 		router,
 		store,
 		render: h => h(App),

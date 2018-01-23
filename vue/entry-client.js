@@ -1,5 +1,5 @@
 import createApp from './app';
-
+import Vue from 'vue';
 const {app, router, store} = createApp();
 
 /* eslint-disable */
@@ -25,9 +25,9 @@ router.onReady(() => {
 
 		// @todo устанавливаем индикатор загрузки
 		// Выполняем метод asyncData каждого компонента
-		Promise.all(activated.map(c => {
-			if (c.asyncData) {
-				return c.asyncData({store, route: to});
+		Promise.all(activated.map(Component => {
+			if (Component.init) {
+				return Component.init({store, route: {to, from}});
 			}
 		})).then(() => {
 			// останавливаем индикатор загрузки

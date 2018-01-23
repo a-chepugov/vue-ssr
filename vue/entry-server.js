@@ -13,18 +13,23 @@ export default context => {
 			}
 
 			Promise.all(matchedComponents.map(Component => {
-				if (Component.asyncData) {
-					return Component.asyncData({
-						store,
-						route: router.currentRoute
-					});
-				}
-			})).then(() => {
-				context.state = store.state;
-
-				resolve(app);
-			}).catch(reject);
+					if (Component.init) {
+						return Component.init({
+							cookie: context.cookie,
+							store,
+							to: router.currentRoute
+						});
+					}
+				}))
+				.then(() => {
+					context.state = {...store.state};
+					resolve(app)
+				})
+				.catch(reject);
 		}, reject);
 	})
-	// .catch(console.error);
+		.catch((error) => {
+			console.error(context.url);
+			console.error(error)
+		});
 };
