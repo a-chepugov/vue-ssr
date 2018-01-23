@@ -1,15 +1,9 @@
-let server = require('./webpack/webpack.config.server');
-let client = require('./webpack/webpack.config.client');
-
 module.exports = function (env = {}) {
-	let target = env.target;
+	let {target} = env;
 
-	switch (env.target) {
-		case 'server':
-			return server(env);
-		case 'client':
-			return client(env);
-		default:
-			console.error(`Конфигурация для ${target} не найдена`)
+	try {
+		return require(`./webpack/webpack.config.${target}`)(env)
+	} catch (error) {
+		console.error(`Ошибка при подключении конфигурация webpack для ${target}`)
 	}
 };

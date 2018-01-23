@@ -6,8 +6,8 @@ import {createBundleRenderer} from 'vue-server-renderer';
 export default class {
 	constructor(vfs) {
 		console.info('Подключаем сборки Vue');
-		this.serverBundleFile = path.resolve(config.webpack.bundles.server, 'vue-ssr-server-bundle.json');
-		this.clientManifestFile = path.resolve(config.webpack.bundles.client, 'vue-ssr-client-manifest.json');
+		this.serverBundleFile = path.resolve(config.webpack.bundles.node, 'vue-ssr-server-bundle.json');
+		this.clientManifestFile = path.resolve(config.webpack.bundles.web, 'vue-ssr-client-manifest.json');
 		this.templatePath = path.resolve(config.webpack.template);
 		this.init(vfs);
 	}
