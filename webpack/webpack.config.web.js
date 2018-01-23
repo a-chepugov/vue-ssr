@@ -33,7 +33,7 @@ module.exports = function (env = {}) {
 
 	let entry = {
 		index: [
-			'../vue/entry-client.js',
+			'../vue/entry-web.js',
 		],
 		vendor: ['vue'],
 	};

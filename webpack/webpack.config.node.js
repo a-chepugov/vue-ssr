@@ -14,7 +14,7 @@ module.exports = function (env = {}) {
 	return merge(commonConfig(env), {
 		entry: {
 			index: [
-				'./vue/entry-server.js'
+				'./vue/entry-node.js'
 			],
 		},
 		output: {
