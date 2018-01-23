@@ -18,17 +18,17 @@ module.exports = function (env = {}) {
 
 	let {NODE_ENV, isDevelopment, DEVELOPMENT, PRODUCTION} = getDefaultValues(env);
 
-	let options = {
+	let vueOptions = {
 		preLoaders: {
 			js: 'placeholder-loader?handler=./vue/helpers/ComponentInitHandler&placeholder=/* placeholder-ComponentInit */',
 		}
 	};
 	if (target === 'server') {
-		options.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
+		vueOptions.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
 	}
 
 	let rules = [
-		vueRule(isDevelopment, target, options),
+		vueRule(isDevelopment, target, vueOptions),
 		babelRule(isDevelopment, target),
 		fontsRule(),
 		imagesRule()

@@ -7,7 +7,7 @@
 		"test": "echo \"Error: no test specified\" && exit 1",
 		"webpack:client:development": "NODE_ENV=development webpack --config webpack --env.target=client --env.clean=true --hide-modules",
 		"webpack:server:development": "NODE_ENV=development webpack --config webpack --env.target=server --env.clean=true --hide-modules",
-		"start:development": "NODE_ENV=development supervisor -i ./build index.js",
+		"start:development": "NODE_ENV=development supervisor -i ./builds index.js",
 		"webpack:client:production": "NODE_ENV=production webpack --config webpack --env.target=client --env.clean=true --hide-modules",
 		"webpack:server:production": "NODE_ENV=production webpack --config webpack --env.target=server --env.clean=true --hide-modules",
 		"start:production": "NODE_ENV=production supervisor index.js"

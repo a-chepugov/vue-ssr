@@ -14,7 +14,7 @@ process.env.NODE_ENV === 'development' ?
 require('./routes/static')(app, express);
 require('./routes')(app);
 
-const port = config.port;
+const port = config.server.port;
 const server = app.listen(port, function (error) {
 	if (error) throw error;
 	let port = server.address().port;

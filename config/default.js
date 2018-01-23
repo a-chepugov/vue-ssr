@@ -1,12 +1,15 @@
 module.exports = {
-	port: 5000,
 	webpack: {
 		public: '/public/', // Обязательно / в конце (для файлов типа chunk)
+		template: 'vue/template.html',
 		bundles: {
 			cache: 'builds/.cache',
-			client: 'build/public/',
-			server: 'build/server/',
+			client: 'builds/public',
+			server: 'builds/server',
+			api: 'builds/api.json',
 		},
-		template: 'vue/template.html',
-	}
+	},
+	server: {
+		port: process.env.NODE_APP_INSTANCE || 5000
+	},
 };
