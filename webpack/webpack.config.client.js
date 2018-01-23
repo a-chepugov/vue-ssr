@@ -11,30 +11,22 @@ const CommonsChunkPlugin = require('./plugins/CommonsChunkPlugin');
 const AggressiveSplittingPlugin = require('./plugins/AggressiveSplittingPlugin');
 const ClosureCompilerPlugin = require('./plugins/ClosureCompilerPlugin');
 
-const projectPath = path.join(__dirname, '..');
-const bundlePathName = config.webpack.bundles.client;
-const outputPath = path.join(projectPath, bundlePathName);
 
 module.exports = function (env = {}) {
 	const {
 		NODE_ENV,
 		DEVELOPMENT,
-		isDevelopment,
-		TESTING,
 		PRODUCTION,
 	} = getDefaultValues(env);
 
 	let {clean, target} = env;
 
-	const projectPath = path.join(__dirname, '..');
-	const bundlePathName = config.webpack.bundles[target];
-	const outputPath = path.join(projectPath, bundlePathName);
+	const bundlePathName = config.webpack.bundles.client;
+	const outputPath = path.resolve(bundlePathName);
+	const publicPath = config.webpack.public;
 
-	let plugins = [
-		new VueSSRClientPlugin(),
-		CommonsChunkPlugin({
-			name: 'common', minChunks: Infinity
-		}),
+	const plugins = [
+		new VueSSRClientPlugin()
 	];
 
 	let entry = {
@@ -51,6 +43,12 @@ module.exports = function (env = {}) {
 			break;
 		}
 		case PRODUCTION: {
+			plugins.push(CommonsChunkPlugin({
+				name: 'runtime', minChunks: Infinity
+			}));
+			plugins.push(CommonsChunkPlugin({
+				name: 'common'
+			}));
 			plugins.push(AggressiveSplittingPlugin());
 			plugins.push(ClosureCompilerPlugin());
 			break;
@@ -64,8 +62,9 @@ module.exports = function (env = {}) {
 			filename: '[name].js?[hash]',
 			chunkFilename: '[name]-chunk.js?[hash]',
 			path: outputPath,
-			publicPath: bundlePathName,
+			publicPath,
 		},
+		target: 'web',
 		resolve: {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],
