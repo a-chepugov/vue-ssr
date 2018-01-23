@@ -8,9 +8,6 @@ const app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-process.env.NODE_ENV === 'development' ?
-	require('./webpack')(app) : null;
-
 require('./routes')(app);
 
 const port = config.server.port;

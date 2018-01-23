@@ -12,7 +12,7 @@ const bundlePath = path.resolve('builds/');
 const publicPath = config.webpack.publicPath;
 const heartbeat = config.webpack.heartbeat;
 
-const webpackConfig = require('../../webpack.js')({target: 'client'});
+const webpackConfig = require('../../../webpack.js')({target: 'client'});
 
 const compiler = webpack(webpackConfig);
 const clientDevMiddleware = webpackDevMiddleware(compiler);
