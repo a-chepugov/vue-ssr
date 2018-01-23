@@ -11,7 +11,6 @@ app.use(bodyParser.urlencoded({extended: true}));
 process.env.NODE_ENV === 'development' ?
 	require('./webpack')(app) : null;
 
-require('./routes/static')(app, express);
 require('./routes')(app);
 
 const port = config.server.port;
