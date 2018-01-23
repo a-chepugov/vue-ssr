@@ -4,7 +4,6 @@
 	"description": "",
 	"main": "index.js",
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1",
 		"webpack:client:development": "NODE_ENV=development webpack --config webpack --env.target=client --env.clean=true --hide-modules",
 		"webpack:server:development": "NODE_ENV=development webpack --config webpack --env.target=server --env.clean=true --hide-modules --profile --display-modules --display-reasons",
 		"webpack:client:development:profile": "NODE_ENV=development webpack --config webpack --env.target=client --env.clean=true --progress --profile --display-modules --display-reasons",
@@ -13,7 +12,9 @@
 		"webpack:client:production": "NODE_ENV=production webpack --config webpack --env.target=client --env.clean=true --hide-modules",
 		"webpack:server:production": "NODE_ENV=production webpack --config webpack --env.target=server --env.clean=true --hide-modules",
 		"start:production": "NODE_ENV=production supervisor index.js",
-		"webpack-dev-server": "NODE_ENV=development webpack-dev-server --config webpack --env.target=client"
+		"webpack-dev-server:client": "NODE_ENV=development webpack-dev-server --config webpack --env.target=client",
+		"webpack-dev-server:server": "NODE_ENV=development webpack-dev-server --config webpack --env.target=server",
+		"test": "echo \"Error: no test specified\" && exit 1"
 	},
 	"repository": {
 		"type": "git",
