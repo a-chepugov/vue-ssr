@@ -40,7 +40,7 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			entry.index.push(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
+			entry.index.unshift(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
 			plugins = plugins.concat(
 				new webpack.HotModuleReplacementPlugin(),
 			);

@@ -12,7 +12,6 @@ Vue.use(Meta, {
 	tagIDKeyName: 'vmid' // the property name that vue-meta uses to determine whether to overwrite or append a tag
 });
 
-
 import mixinsGlobal from './mixins/global';
 import routeToLang from './mixins/routeToLang';
 import deviceChecker from './mixins/deviceChecker';

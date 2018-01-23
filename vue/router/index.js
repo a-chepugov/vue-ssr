@@ -13,6 +13,10 @@ export default function () {
 		routes: [
 			{
 				path: '/',
+				redirect: '/1'
+			},
+			{
+				path: '/1',
 				name: 'Page1',
 				component: Page1
 			},
