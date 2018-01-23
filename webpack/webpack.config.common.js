@@ -23,7 +23,7 @@ module.exports = function (env = {}) {
 			js: 'placeholder-loader?handler=./vue/helpers/ComponentInitHandler&placeholder=/* placeholder-ComponentInit */',
 		}
 	};
-	if (target === 'server') {
+	if (target === 'server') {	// @todo изменить когда поменяет target
 		vueOptions.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
 	}
 
@@ -48,7 +48,7 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			plugins.push(new WriteFilePlugin());
+			// plugins.push(new WriteFilePlugin());
 			break;
 		}
 		case PRODUCTION: {

@@ -9,7 +9,7 @@ module.exports = function (isDevelopment, target, options) {
 				options
 			}
 		]
-	}
+	};
 	if (isDevelopment) {
 		config.use.push(cache(target, 'vue'))
 	}

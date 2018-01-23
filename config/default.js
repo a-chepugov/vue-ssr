@@ -4,6 +4,10 @@ module.exports = {
 		template: 'vue/template.html',
 		__webpack_hmr: '__webpack_hmr',
 		heartbeat: 10000,
+		devServer:{
+			port: 7000,
+			debugURL: '/___fs'
+		},
 		bundles: {
 		  // Добавить эти директории в игнорируемые сервером, для корректной работы hot-update - supervisor -i ./builds index.js
 			cache: 'builds/.cache',

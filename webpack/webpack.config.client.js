@@ -11,20 +11,20 @@ const CommonsChunkPlugin = require('./plugins/CommonsChunkPlugin');
 const AggressiveSplittingPlugin = require('./plugins/AggressiveSplittingPlugin');
 const ClosureCompilerPlugin = require('./plugins/ClosureCompilerPlugin');
 
-
 module.exports = function (env = {}) {
 	const {
 		NODE_ENV,
 		DEVELOPMENT,
+		isDevelopment,
 		PRODUCTION,
 	} = getDefaultValues(env);
 
-	let {clean, target} = env;
+	let {target} = env;
 
 	const __webpack_hmr = config.webpack.__webpack_hmr;
 	const heartbeat = config.webpack.heartbeat;
 	const bundlePathName = config.webpack.bundles.client;
-	const outputPath = path.resolve(bundlePathName);
+	const bundlePath = path.resolve(bundlePathName);
 	const publicPath = config.webpack.publicPath;
 
 	let plugins = [
@@ -57,16 +57,27 @@ module.exports = function (env = {}) {
 		}
 	}
 
+	const devServer = {
+		port: 7000,
+		hot: true,
+		contentBase: bundlePath,
+		disableHostCheck: true,
+		historyApiFallback: true,
+		publicPath,
+	};
+
 	return merge(commonConfig(env), {
 		context: path.join(__dirname),
 		entry,
 		output: {
 			filename: '[name].js?[hash]',
 			chunkFilename: '[name]-chunk.js?[hash]',
-			path: outputPath,
+			path: bundlePath,
+			library: '[name]',
 			publicPath,
 		},
 		target: 'web',
+		devServer,
 		resolve: {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],

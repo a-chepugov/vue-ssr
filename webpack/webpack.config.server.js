@@ -8,7 +8,7 @@ const getDefaultValues = require('./getDefaultValues');
 
 const projectPath = path.join(__dirname, '..');
 const bundlePathName = config.webpack.bundles.server;
-const outputPath = path.join(projectPath, bundlePathName);
+const bundlePath = path.join(projectPath, bundlePathName);
 
 module.exports = function (env = {}) {
 	return merge(commonConfig(env), {
@@ -18,7 +18,7 @@ module.exports = function (env = {}) {
 			],
 		},
 		output: {
-			path: outputPath,
+			path: bundlePath,
 			filename: '[name].js',
 			libraryTarget: 'commonjs2',
 		},
