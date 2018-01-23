@@ -28,7 +28,10 @@ module.exports = function (env = {}) {
 	const publicPath = config.webpack.public;
 
 	const plugins = [
-		new VueSSRClientPlugin()
+		new VueSSRClientPlugin(),
+		CommonsChunkPlugin({
+			name: 'runtime', minChunks: Infinity
+		}),
 	];
 
 	let entry = {
