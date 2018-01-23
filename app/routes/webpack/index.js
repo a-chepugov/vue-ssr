@@ -3,62 +3,81 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from 'config';
 import path from 'path';
-import fs from 'fs';
+import url from 'url';
+
+import vue from '../../controllers/vue';
 
 const __webpack_hmr = config.webpack.__webpack_hmr;
-const bundlePathName = config.webpack.bundles.client;
-const debugURL = config.webpack.devServer.debugURL;
-const bundlePath = path.resolve('builds/');
-const publicPath = config.webpack.publicPath;
 const heartbeat = config.webpack.heartbeat;
+const clientBundlePathName = config.webpack.bundles.client;
+const publicPath = config.webpack.publicPath;
 
-const webpackConfig = require('../../../webpack.js')({target: 'client'});
-
-const compiler = webpack(webpackConfig);
-const clientDevMiddleware = webpackDevMiddleware(compiler);
-const clientHotMiddleware = webpackHotMiddleware(compiler, {
+const clientWebpackConfig = require('../../../webpack.js')({target: 'client'});
+const serverWebpackConfig = require('../../../webpack.js')({target: 'server'});
+const clientCompiler = webpack(clientWebpackConfig);
+const serverCompiler = webpack(serverWebpackConfig);
+const clientDevMiddleware = webpackDevMiddleware(clientCompiler);
+const clientHotMiddleware = webpackHotMiddleware(clientCompiler, {
 	log: console.log,
 	path: `${publicPath}${__webpack_hmr}`,
 	heartbeat
 });
+const serverDevMiddleware = webpackDevMiddleware(serverCompiler);
 
-const urlPattert = new RegExp(`^${debugURL.replace('([/])', '\$1')}`);
-
-function getData(fs, stats, path){
-	switch (true) {
-		case stats.isFile():
-			return fs.readFileSync(path);
-			break;
-		case stats.isDirectory():
-			return  fs.readdirSync(path);
-			break;
-		default:
-			return 'Unknown file type';
-	}
-}
-
-function devFs(devMiddleware, request, response, next) {
-	if (request.url.match(urlPattert)) {
-		const pathRelative = request.url.replace(urlPattert, '');
-		const pathAbsolute = path.resolve(path.join(bundlePath, pathRelative));
-
-		devMiddleware.fileSystem.stat(pathAbsolute, (error, stats) => {
-			if (error) {
-				console.error(error)
-			} else {
-				let data = getData(devMiddleware.fileSystem, stats, pathAbsolute);
-				response.send(data);
-			}
-		});
+const staticPattert = new RegExp(`^${publicPath.replace('([/])', '\$1')}`);
+function statics(request, response, next) {
+	if (request.url.match(staticPattert)) {
+		try {
+			const filePath = path.resolve(path.join(clientBundlePathName, url.parse(request.url).pathname.replace(staticPattert, '')));
+			response.send(clientDevMiddleware.fileSystem.readFileSync(filePath));
+		} catch (error) {
+			console.error(error);
+			next()
+		}
 	} else {
 		next()
 	}
 }
 
-devFs = devFs.bind(undefined, clientDevMiddleware);
+const onBundlesReady = (...DevMiddlewares) =>
+	Promise.all(DevMiddlewares.map(item =>
+			new Promise((resolve, reject) =>
+				item.waitUntilValid((...args) =>
+					resolve(...args))
+			)
+		)
+	);
 
-module.exports = function (app) {
-	app.use(clientDevMiddleware);
-	app.use(clientHotMiddleware);
-	app.use(devFs);
+
+let ssr;
+module.exports = function (server) {
+	server.use(serverDevMiddleware);
+	server.use(clientDevMiddleware);
+	server.use(clientHotMiddleware);
+
+	// Подключаем сборки Vue с виртуальной файловой системы
+	onBundlesReady(clientDevMiddleware, serverDevMiddleware)
+		.then(() => {
+			// раздача статических файлов с виртуальной файловой системы
+			server.use(statics);
+
+			ssr = vue(server, {
+				client: clientDevMiddleware.fileSystem,
+				server: serverDevMiddleware.fileSystem
+			});
+
+			server.use((response, request, next) => {
+				console.log('DEBUG:index.js():75 =>');
+
+				onBundlesReady(clientDevMiddleware, serverDevMiddleware)
+					.then(() => ssr.init({
+						client: clientDevMiddleware.fileSystem,
+						server: serverDevMiddleware.fileSystem
+					}));
+				next()
+			});
+		})
+		.then(() => {
+
+		});
 };
