@@ -4,6 +4,7 @@ import webpackHotMiddleware from 'webpack-hot-middleware';
 import config from 'config';
 
 const __webpack_hmr = config.webpack.__webpack_hmr;
+const publicPath = config.webpack.publicPath;
 const heartbeat = config.webpack.heartbeat;
 
 const webpackConfig = require('../../webpack.js')({target: 'client'});
@@ -21,7 +22,7 @@ module.exports = function (app) {
 
 	app.use(webpackHotMiddleware(compiler, {
 		log: console.log,
-		path: __webpack_hmr,
+		path: `${publicPath}${__webpack_hmr}`,
 		heartbeat
 	}));
 };

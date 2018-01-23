@@ -5,6 +5,6 @@ import express from 'express';
 module.exports = function (app) {
 	let clientBundlePath = config.webpack.bundles.client;
 	let clientBundleRealPath = path.resolve(clientBundlePath);
-	let urlPath = config.webpack.public;
-	app.use(urlPath, express.static(clientBundleRealPath));
+	let publicPath = config.webpack.publicPath;
+	app.use(publicPath, express.static(clientBundleRealPath));
 };

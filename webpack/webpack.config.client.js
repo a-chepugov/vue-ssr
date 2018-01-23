@@ -25,13 +25,11 @@ module.exports = function (env = {}) {
 	const heartbeat = config.webpack.heartbeat;
 	const bundlePathName = config.webpack.bundles.client;
 	const outputPath = path.resolve(bundlePathName);
-	const publicPath = config.webpack.public;
+	const publicPath = config.webpack.publicPath;
 
-	const plugins = [
+	let plugins = [
 		new VueSSRClientPlugin(),
-		CommonsChunkPlugin({
-			name: 'runtime', minChunks: Infinity
-		}),
+		CommonsChunkPlugin({name: 'runtime', minChunks: Infinity}),
 	];
 
 	let entry = {
@@ -43,19 +41,18 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			entry.index.push(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}`);
-			plugins.push(new webpack.HotModuleReplacementPlugin());
+			entry.index.push(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
+			plugins = plugins.concat(
+				new webpack.HotModuleReplacementPlugin(),
+			);
 			break;
 		}
 		case PRODUCTION: {
-			plugins.push(CommonsChunkPlugin({
-				name: 'runtime', minChunks: Infinity
-			}));
-			plugins.push(CommonsChunkPlugin({
-				name: 'common'
-			}));
-			plugins.push(AggressiveSplittingPlugin());
-			plugins.push(ClosureCompilerPlugin());
+			plugins = plugins.concat(
+				CommonsChunkPlugin({name: 'common'}),
+				AggressiveSplittingPlugin(),
+				ClosureCompilerPlugin(),
+			);
 			break;
 		}
 	}
