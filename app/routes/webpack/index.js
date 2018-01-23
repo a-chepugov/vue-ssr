@@ -25,6 +25,7 @@ const clientHotMiddleware = webpackHotMiddleware(clientCompiler, {
 const serverDevMiddleware = webpackDevMiddleware(serverCompiler);
 
 const staticPattert = new RegExp(`^${publicPath.replace('([/])', '\$1')}`);
+
 function statics(request, response, next) {
 	if (request.url.match(staticPattert)) {
 		try {
@@ -67,8 +68,6 @@ module.exports = function (server) {
 			});
 
 			server.use((response, request, next) => {
-				console.log('DEBUG:index.js():75 =>');
-
 				onBundlesReady(clientDevMiddleware, serverDevMiddleware)
 					.then(() => ssr.init({
 						client: clientDevMiddleware.fileSystem,
@@ -77,7 +76,4 @@ module.exports = function (server) {
 				next()
 			});
 		})
-		.then(() => {
-
-		});
 };
