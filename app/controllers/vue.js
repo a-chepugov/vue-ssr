@@ -1,5 +1,5 @@
 'use strict';
-import singleton from '../../vue/helpers/singleton';
+import singleton from '../../helpers/singleton';
 import Ssr from '../managers/ssr';
 
 export default function (server, vfs) {
