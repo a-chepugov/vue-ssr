@@ -57,15 +57,6 @@ module.exports = function (env = {}) {
 		}
 	}
 
-	const devServer = {
-		port: 7000,
-		hot: true,
-		contentBase: bundlePath,
-		disableHostCheck: true,
-		historyApiFallback: true,
-		publicPath,
-	};
-
 	return merge(commonConfig(env), {
 		context: path.join(__dirname),
 		entry,
@@ -77,7 +68,6 @@ module.exports = function (env = {}) {
 			publicPath,
 		},
 		target: 'web',
-		devServer,
 		resolve: {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],
