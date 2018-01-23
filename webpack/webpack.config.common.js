@@ -13,44 +13,62 @@ const imagesRule = require('./rules/url-images');
 
 const getDefaultValues = require('./getDefaultValues');
 
-let rules = [
-	babelRule(),
-	vueRule(),
-	fontsRule(),
-	imagesRule()
-];
-
 module.exports = function (env = {}) {
 	let {clean, target} = env;
-	let {NODE_ENV, isDevelopment} = getDefaultValues(env);
+
+	let {NODE_ENV, isDevelopment, DEVELOPMENT, PRODUCTION} = getDefaultValues(env);
+
+	let options = {
+		preLoaders: {
+			js: 'placeholder-loader?handler=./vue/helpers/ComponentInitHandler&placeholder=/* placeholder-ComponentInit */',
+		}
+	};
+	if (target === 'server') {
+		options.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
+	}
+
+	let rules = [
+		vueRule(isDevelopment, target, options),
+		babelRule(isDevelopment, target),
+		fontsRule(),
+		imagesRule()
+	];
 
 	let devtool = isDevelopment ? 'cheap-module-eval-source-map' : 'source-map';
 	let watch = isDevelopment;
 
 	let plugins = [
-		new WriteFilePlugin(),
 		DefinePlugin({
+			'TARGET': JSON.stringify(target),
 			'process.env': {
 				NODE_ENV: `"${NODE_ENV}"` // Запись должна быть именно с такой конфигурацией кавычек
 			}
 		}),
 	];
 
-	const projectPath = path.join(__dirname, '..');
+	switch (NODE_ENV) {
+		case DEVELOPMENT: {
+			plugins.push(new WriteFilePlugin());
+			break;
+		}
+		case PRODUCTION: {
+			break;
+		}
+	}
+
+	const projectPath = path.resolve('.');
 	const bundlePathName = config.webpack.bundles[target];
 
 	clean ?
 		plugins.push(CleanWebpackPlugin(projectPath, [bundlePathName])) :
 		undefined;
 
-	const cfg = {
+	return {
 		module: {
 			rules
 		},
 		devtool,
 		watch,
-		plugins
+		plugins,
 	};
-
-	return cfg
 };

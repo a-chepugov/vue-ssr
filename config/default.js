@@ -3,6 +3,7 @@ module.exports = {
 	webpack: {
 		public: '/public/', // Обязательно / в конце (для файлов типа chunk)
 		bundles: {
+			cache: 'builds/.cache',
 			client: 'build/public/',
 			server: 'build/server/',
 		},
