@@ -27,9 +27,15 @@ module.exports = function (env = {}) {
 		vueOptions.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
 	}
 
+	let babelOptions = {};
+	let babelPreloaders = [];
+	if (target === 'web') {
+		babelPreloaders.push('placeholder-loader?handler=./vue/helpers/webpackStoreHot&placeholder=/* placeholder-StoreHot */')
+	}
+
 	let rules = [
 		vueRule(isDevelopment, target, vueOptions),
-		babelRule(isDevelopment, target),
+		babelRule(isDevelopment, target, babelOptions, babelPreloaders),
 		fontsRule(),
 		imagesRule()
 	];
