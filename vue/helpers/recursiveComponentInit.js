@@ -1,7 +1,7 @@
 export default function (Component = {}, fnName, args) {
 	let promises = [];
 
-	function recursive(Component = {}, fnName) {
+	function recursive(Component = {}) {
 		const {[fnName]: fn, components} = Component;
 		if (fn instanceof Function) {
 			promises.push(fn(args));
@@ -10,10 +10,10 @@ export default function (Component = {}, fnName, args) {
 		if (components instanceof Object) {
 			Object
 				.values(components)
-				.forEach((item) => recursive(item, fnName))
+				.forEach((item) => recursive(item))
 		}
 	}
 
-	recursive(Component, fnName);
+	recursive(Component);
 	return Promise.all(promises)
 }
