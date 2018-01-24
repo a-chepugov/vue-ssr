@@ -1,12 +1,13 @@
 import createApp from './app';
 import recursiveComponentInit from './helpers/recursiveComponentInit';
+import createMetaData from './helpers/metaData';
 
 export default context => {
 	return new Promise((resolve, reject) => {
 		const {app, router, store} = createApp();
 		router.push(context.url);
-		context.meta = app.$meta();
-
+		context.meta = createMetaData(app.$meta());
+		// context.meta = {};
 		router.onReady(() => {
 			const matchedComponents = router.getMatchedComponents();
 			if (!matchedComponents.length) {
