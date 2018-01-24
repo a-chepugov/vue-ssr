@@ -5,15 +5,15 @@ import config from 'config';
 import path from 'path';
 import url from 'url';
 
-import vue from '../../controllers/vue';
+import vue from '../controllers/vue';
 
 const __webpack_hmr = config.webpack.__webpack_hmr;
 const heartbeat = config.webpack.heartbeat;
 const clientBundlePathName = config.webpack.bundles.web;
 const publicPath = config.webpack.publicPath;
 
-const clientWebpackConfig = require('../../../webpack.js')({target: 'web'});
-const serverWebpackConfig = require('../../../webpack.js')({target: 'node'});
+const clientWebpackConfig = require('../../webpack.js')({target: 'web'});
+const serverWebpackConfig = require('../../webpack.js')({target: 'node'});
 const clientCompiler = webpack(clientWebpackConfig);
 const serverCompiler = webpack(serverWebpackConfig);
 const clientDevMiddleware = webpackDevMiddleware(clientCompiler);
