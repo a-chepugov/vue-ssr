@@ -23,7 +23,7 @@ module.exports = function (env = {}) {
 			js: 'placeholder-loader?handler=./vue/helpers/ComponentInitHandler&placeholder=/* placeholder-ComponentInit */',
 		}
 	};
-	if (target === 'server') {	// @todo изменить когда поменяет target
+	if (target === 'node') {
 		vueOptions.preLoaders.js += '!placeholder-loader?handler=./vue/helpers/ComponentApiHandler&placeholder=/* placeholder-ComponentApi */'
 	}
 
