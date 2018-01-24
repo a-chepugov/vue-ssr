@@ -22,7 +22,7 @@ export default class {
 
 			this.rendererForBundler = createBundleRenderer(serverBundle,
 				{
-					runInNewContext: false,
+					runInNewContext: true,
 					template,
 					clientManifest,
 				});
