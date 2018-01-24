@@ -22,7 +22,7 @@ module.exports = function (env = {}) {
 
 	const __webpack_hmr = config.webpack.__webpack_hmr;
 	const heartbeat = config.webpack.heartbeat;
-	const bundlePathName = config.webpack.bundles.web;
+	const bundlePathName = config.webpack.bundles[target];
 	const bundlePath = path.resolve(bundlePathName);
 	const publicPath = config.webpack.publicPath;
 
