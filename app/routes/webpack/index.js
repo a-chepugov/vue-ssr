@@ -34,7 +34,6 @@ function statics(request, response, next) {
 			response.send(clientDevMiddleware.fileSystem.readFileSync(filePath));
 		} catch (error) {
 			console.error(`ошибка получения с виртуальной файловой истемы файла ${filePath}`);
-			// console.error(error);
 			next()
 		}
 	} else {

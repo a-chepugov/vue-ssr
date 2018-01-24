@@ -4,7 +4,6 @@ const merge = require('webpack-merge');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
 const commonConfig = require('./webpack.config.common.js');
-const getDefaultValues = require('./getDefaultValues');
 
 const projectPath = path.join(__dirname, '..');
 const bundlePathName = config.webpack.bundles.node;
