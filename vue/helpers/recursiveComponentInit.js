@@ -10,7 +10,7 @@ export default function (Component = {}, fnName, args) {
 		if (components instanceof Object) {
 			Object
 				.values(components)
-				.forEach((item) => recursive(item, fnName, args))
+				.forEach((item) => recursive(item, fnName))
 		}
 	}
 
