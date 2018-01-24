@@ -3,6 +3,7 @@ function getModules() {
 		device: require("./device").default,
 		lang: require("./lang").default,
 		l10n: require("./l10n").default,
+		test: require("./_test").default,
 	}
 };
 
@@ -10,6 +11,7 @@ const modulesForHotReplacement = {
 	device: '',
 	lang: '',
 	l10n: '',
+	test: '',
 };
 
 module.exports = function () {
@@ -19,7 +21,12 @@ module.exports = function () {
 	Vue.use(Vuex);
 
 	const store = new Vuex.Store({
-		modules: getModules()
+		modules: {
+			device: require("./device").default,
+			lang: require("./lang").default,
+			l10n: require("./l10n").default,
+			test: require("./_test").default,
+		}
 	});
 
 	if (module.hot) {
