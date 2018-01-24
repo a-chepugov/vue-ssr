@@ -28,11 +28,13 @@ const staticPattert = new RegExp(`^${publicPath.replace('([/])', '\$1')}`);
 
 function statics(request, response, next) {
 	if (request.url.match(staticPattert)) {
+		let filePath;
 		try {
-			const filePath = path.resolve(path.join(clientBundlePathName, url.parse(request.url).pathname.replace(staticPattert, '')));
+			filePath = path.resolve(path.join(clientBundlePathName, url.parse(request.url).pathname.replace(staticPattert, '')));
 			response.send(clientDevMiddleware.fileSystem.readFileSync(filePath));
 		} catch (error) {
-			console.error(error);
+			console.error(`ошибка получения с виртуальной файловой истемы файла ${filePath}`);
+			// console.error(error);
 			next()
 		}
 	} else {
