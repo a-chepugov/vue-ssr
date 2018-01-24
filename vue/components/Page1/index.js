@@ -2,6 +2,9 @@ import {mapActions, mapMutations} from 'vuex';
 import Page1_1 from './Page1_1/index.vue';
 
 export default {
+	init() {
+		console.log('Инициализация корневого компонента');
+	},
 	components: {
 		Page1_1
 	},

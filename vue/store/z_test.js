@@ -5,16 +5,17 @@ export default {
 	},
 	actions: {
 		set ({commit}, payload) {
-			console.log('DEBUG:_test.js(set):8 =>');
-			// commit('set', payload)
+			return commit('set', payload)
 		},
 	},
 	mutations: {
-		count (state, payload) {
+		set (state, payload) {
 			state.count += payload;
 		},
 	},
 	getters: {
-		count: ({count}) => count,
+		get ({count}) {
+			return count
+		},
 	}
 }

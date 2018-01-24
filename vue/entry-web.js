@@ -1,6 +1,7 @@
 import createApp from './app';
-import Vue from 'vue';
+
 const {app, router, store} = createApp();
+import recursiveComponentInit from './helpers/recursiveComponentInit';
 
 /* eslint-disable */
 if (window.__INITIAL_STATE__) {
@@ -24,11 +25,8 @@ router.onReady(() => {
 		}
 
 		// @todo устанавливаем индикатор загрузки
-		// Выполняем метод asyncData каждого компонента
 		Promise.all(activated.map(Component => {
-			if (Component.init) {
-				return Component.init({store, route: {to, from}});
-			}
+			return recursiveComponentInit(Component, 'init', {store, route: {to, from}});
 		})).then(() => {
 			// останавливаем индикатор загрузки
 			next();

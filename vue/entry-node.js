@@ -1,4 +1,5 @@
 import createApp from './app';
+import recursiveComponentInit from './helpers/recursiveComponentInit';
 
 export default context => {
 	return new Promise((resolve, reject) => {
@@ -13,13 +14,12 @@ export default context => {
 			}
 
 			Promise.all(matchedComponents.map(Component => {
-					if (Component.init) {
-						return Component.init({
-							cookie: context.cookie,
-							store,
-							to: router.currentRoute
-						});
-					}
+					const data = {
+						cookie: context.cookie,
+						store,
+						to: router.currentRoute
+					};
+					return recursiveComponentInit(Component, 'init', data);
 				}))
 				.then(() => {
 					context.state = {...store.state};
@@ -30,6 +30,6 @@ export default context => {
 	})
 		.catch((error) => {
 			console.error(context.url);
-			console.error(error)
+			throw error
 		});
 };
