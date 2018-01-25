@@ -4,7 +4,12 @@ export default function (Component = {}, fnName, args) {
 	function recursive(Component = {}) {
 		const {[fnName]: fn, components} = Component;
 		if (fn instanceof Function) {
-			promises.push(fn(args));
+			try {
+				const result = fn(args);
+				promises.push(result instanceof Promise ? result.catch(console.error) : result);
+			} catch (error) {
+				console.error(error);
+			}
 		}
 
 		if (components instanceof Object) {
