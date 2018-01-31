@@ -6,7 +6,7 @@ export default context => {
 	return new Promise((resolve, reject) => {
 		const {app, router, store} = createApp();
 		router.push(context.url);
-		context.meta = createMetaData(app.$meta());
+
 		router.onReady(() => {
 			const matchedComponents = router.getMatchedComponents();
 			if (!matchedComponents.length) {
@@ -23,6 +23,7 @@ export default context => {
 			Promise.all(matchedComponents.map(Component => recursiveComponentInit(Component, 'init', data)))
 				.then(() => {
 					context.state = {...store.state};
+					context.meta = createMetaData(app.$meta());
 					resolve(app)
 				})
 				.catch(reject);
