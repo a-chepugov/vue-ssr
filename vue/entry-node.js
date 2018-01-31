@@ -13,14 +13,14 @@ export default context => {
 				return reject({code: 404});
 			}
 
-			Promise.all(matchedComponents.map(Component => {
-					const data = {
-						context,
-						store,
-						router
-					};
-					return recursiveComponentInit(Component, 'init', data);
-				}))
+			const data = {
+				store,
+				router,
+				route: {to: router.currentRoute},
+				context,
+			};
+
+			Promise.all(matchedComponents.map(Component => recursiveComponentInit(Component, 'init', data)))
 				.then(() => {
 					context.state = {...store.state};
 					resolve(app)
