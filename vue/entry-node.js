@@ -15,9 +15,9 @@ export default context => {
 
 			Promise.all(matchedComponents.map(Component => {
 					const data = {
-						cookie: context.cookie,
+						context,
 						store,
-						to: router.currentRoute
+						router
 					};
 					return recursiveComponentInit(Component, 'init', data);
 				}))

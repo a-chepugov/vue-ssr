@@ -5,10 +5,7 @@ export default function (server, vfs) {
 	const ssr = new Ssr(vfs);
 
 	function render(request, response) {
-		const context = {
-			cookie: request.headers.cookie,
-			url: request.url
-		};
+		const context = {request, response};
 
 		ssr.rendererForBundler.renderToString(context,
 			(error, html) => {
