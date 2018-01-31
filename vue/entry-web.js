@@ -24,13 +24,15 @@ router.onReady(() => {
 			return next();
 		}
 
+		const data = {store, router, route: {to, from}, matched, prevMatched};
+
 		// @todo устанавливаем индикатор загрузки
-		Promise.all(activated.map(Component => {
-			return recursiveComponentInit(Component, 'init', {store, route: {to, from}});
-		})).then(() => {
-			// останавливаем индикатор загрузки
-			next();
-		}).catch(next);
+		Promise.all(activated.map(Component => recursiveComponentInit(Component, 'init', data)))
+			.then(() => {
+				// останавливаем индикатор загрузки
+				next();
+			})
+			.catch(next);
 	});
 
 	app.$mount('#app');
