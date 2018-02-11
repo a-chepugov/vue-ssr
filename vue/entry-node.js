@@ -13,7 +13,20 @@ export default context => {
 				return reject({code: 404});
 			}
 
+			const {
+				currentRoute: {
+					meta: {
+						langId
+					}
+				}
+			} = router;
+
+			if (langId) {
+				store.commit('lang/set', langId)
+			}
+
 			const data = {
+				app,
 				store,
 				router,
 				route: {to: router.currentRoute},
