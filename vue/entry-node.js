@@ -17,8 +17,8 @@ export default context => {
 				currentRoute: {
 					meta: {
 						langId
-					}
-				}
+					} = {}
+				} = {}
 			} = router;
 
 			if (langId) {
