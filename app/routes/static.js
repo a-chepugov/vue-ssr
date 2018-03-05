@@ -7,6 +7,6 @@ module.exports = function (app) {
 	let clientBundleRealPath = path.resolve(clientBundlePath);
 	let publicPath = config.webpack.publicPath;
 	app.use(publicPath, express.static(clientBundleRealPath, {
-		maxAge: '1d', etag: true, lastModified: true
+		maxAge: '1y', etag: true, lastModified: true
 	}));
 };
