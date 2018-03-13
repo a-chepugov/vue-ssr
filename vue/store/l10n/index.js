@@ -25,7 +25,7 @@ export default {
 	getters: {
 		get: (state) => (langCode, word, absenceHandler) => {
 			let {[langCode]: {[word]: value} = {}} = state;
-			if (!value && absenceHandler instanceof Function) {
+			if (!value && (absenceHandler instanceof Function || typeof absenceHandler === 'function')) {
 				return absenceHandler(langCode, word);
 			}
 			return value
