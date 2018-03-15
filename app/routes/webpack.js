@@ -31,6 +31,7 @@ function statics(request, response, next) {
 		let filePath;
 		try {
 			filePath = path.resolve(path.join(clientBundlePathName, url.parse(request.url).pathname.replace(staticPattert, '')));
+			response.set('Content-Type', 'application/javascript');
 			response.send(clientDevMiddleware.fileSystem.readFileSync(filePath));
 		} catch (error) {
 			console.error(`ошибка получения с виртуальной файловой системы файла ${filePath}`);
