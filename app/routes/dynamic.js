@@ -11,7 +11,7 @@ module.exports = function (server) {
 	} catch (error) {
 		const message = `\ndynamic api file not found.\n`;
 		error.message += message;
-		console.error(message);
+		console.error(error.message);
 	}
 	if (apis instanceof Array) {
 		apis.forEach((item) => {
@@ -19,7 +19,8 @@ module.exports = function (server) {
 				require(item)(server);
 			} catch (error) {
 				let message = `\nAppending location to api error with ${item}\n`;
-				console.error(message);
+				error.message += message;
+				console.error(error.message);
 			}
 		})
 	}
