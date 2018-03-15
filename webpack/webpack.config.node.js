@@ -30,6 +30,6 @@ module.exports = function (env = {}) {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],
 		},
-		externals: [nodeExternals()]
+		externals: [nodeExternals({whitelist:['vue', 'vuex']})]
 	})
 };
