@@ -52,23 +52,23 @@ const onBundlesReady = (...DevMiddlewares) =>
 
 
 let ssr;
-module.exports = function (server) {
-	server.use(serverDevMiddleware);
-	server.use(clientDevMiddleware);
-	server.use(clientHotMiddleware);
+module.exports = function (app) {
+	app.use(serverDevMiddleware);
+	app.use(clientDevMiddleware);
+	app.use(clientHotMiddleware);
 
 	// Подключаем сборки Vue с виртуальной файловой системы
 	onBundlesReady(clientDevMiddleware, serverDevMiddleware)
 		.then(() => {
 			// раздача статических файлов с виртуальной файловой системы
-			server.use(statics);
+			app.use(statics);
 
-			ssr = vue(server, {
+			ssr = vue(app, {
 				client: clientDevMiddleware.fileSystem,
 				server: serverDevMiddleware.fileSystem
 			});
 
-			server.use((response, request, next) => {
+			app.use((response, request, next) => {
 				onBundlesReady(clientDevMiddleware, serverDevMiddleware)
 					.then(() => ssr.init({
 						client: clientDevMiddleware.fileSystem,

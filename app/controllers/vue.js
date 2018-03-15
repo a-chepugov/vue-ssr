@@ -1,7 +1,7 @@
 'use strict';
 import Ssr from '../helpers/ssr';
 
-export default function (server, vfs) {
+export default function (app, vfs) {
 	const ssr = new Ssr(vfs);
 
 	function render(request, response) {
@@ -19,6 +19,6 @@ export default function (server, vfs) {
 		)
 	}
 
-	server.get(/.*/, render);
+	app.get(/.*/, render);
 	return ssr
 }
