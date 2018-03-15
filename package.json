@@ -48,7 +48,8 @@
 		"vuex-router-sync": "^4.3.2",
 		"webpack": "^3.6.0",
 		"webpack-closure-compiler": "^2.1.5",
-		"webpack-merge": "^4.1.0"
+		"webpack-merge": "^4.1.0",
+		"webpack-node-externals": "^1.6.0"
 	},
 	"devDependencies": {
 		"cache-loader": "^1.1.0",

@@ -1,6 +1,7 @@
 const path = require('path');
 const config = require('config');
 const merge = require('webpack-merge');
+const nodeExternals = require('webpack-node-externals');
 const VueSSRServerPlugin = require('vue-server-renderer/server-plugin');
 
 const commonConfig = require('./webpack.config.common.js');
@@ -29,5 +30,6 @@ module.exports = function (env = {}) {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],
 		},
+		externals: [nodeExternals()]
 	})
 };
