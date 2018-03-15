@@ -6,6 +6,8 @@ const WriteFilePlugin = require('write-file-webpack-plugin');
 const DefinePlugin = require('./plugins/DefinePlugin');
 const CleanWebpackPlugin = require('./plugins/CleanWebpackPlugin');
 
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+
 const vueRule = require('./rules/vue');
 const babelRule = require('./rules/babel');
 const fontsRule = require('./rules/url-fonts');
@@ -55,6 +57,20 @@ module.exports = function (env = {}) {
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
 			// plugins.push(new WriteFilePlugin());
+			plugins.push(
+				new HardSourceWebpackPlugin({
+					cacheDirectory: './node_modules/.cache/hard-source/[confighash]',
+					recordsPath: './node_modules/.cache/hard-source/[confighash]/records.json',
+					configHash: function(webpackConfig) {
+						return require('node-object-hash')({sort: false}).hash(webpackConfig);
+					},
+					environmentHash: {
+						root: process.cwd(),
+						directories: [],
+						files: ['package-lock.json', 'yarn.lock'],
+					},
+				}),
+			);
 			break;
 		}
 		case PRODUCTION: {

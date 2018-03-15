@@ -37,6 +37,7 @@
 		"cookie-parser": "^1.4.3",
 		"css-loader": "^0.28.7",
 		"express": "^4.16.1",
+		"hard-source-webpack-plugin": "^0.6.4",
 		"placeholder-loader": "^1",
 		"vue": "^2.4.4",
 		"vue-loader": "^13.0.5",
