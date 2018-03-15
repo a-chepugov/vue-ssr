@@ -1,5 +1,5 @@
 'use strict';
-import Ssr from '../managers/ssr';
+import Ssr from '../helpers/ssr';
 
 export default function (server, vfs) {
 	const ssr = new Ssr(vfs);
