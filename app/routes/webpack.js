@@ -33,7 +33,7 @@ function statics(request, response, next) {
 			filePath = path.resolve(path.join(clientBundlePathName, url.parse(request.url).pathname.replace(staticPattert, '')));
 			response.send(clientDevMiddleware.fileSystem.readFileSync(filePath));
 		} catch (error) {
-			console.error(`ошибка получения с виртуальной файловой истемы файла ${filePath}`);
+			console.error(`ошибка получения с виртуальной файловой системы файла ${filePath}`);
 			next()
 		}
 	} else {
