@@ -52,7 +52,7 @@ const onBundlesReady = (...DevMiddlewares) =>
 
 
 let ssr;
-module.exports = function (app) {
+export default function (app) {
 	app.use(serverDevMiddleware);
 	app.use(clientDevMiddleware);
 	app.use(clientHotMiddleware);
