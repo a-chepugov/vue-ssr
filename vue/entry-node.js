@@ -5,7 +5,7 @@ import createMetaData from './helpers/metaData';
 export default context => {
 	return new Promise((resolve, reject) => {
 		const {app, router, store} = createApp();
-		router.push(context.url);
+		router.push(context.request.url);
 
 		router.onReady(() => {
 			const matchedComponents = router.getMatchedComponents();
@@ -43,7 +43,7 @@ export default context => {
 		}, reject);
 	})
 		.catch((error) => {
-			console.error(context.url);
+			console.error(context.request.url);
 			throw error
 		});
 };
