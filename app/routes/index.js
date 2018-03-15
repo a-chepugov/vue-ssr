@@ -2,13 +2,13 @@
 import dynamic from './dynamic';
 import vue from '../controllers/vue';
 
-module.exports = function (server) {
-	dynamic(server);
+module.exports = function (app) {
+	dynamic(app);
 
 	if (process.env.NODE_ENV === 'development') {
-		require('./webpack')(server);
+		require('./webpack')(app);
 	} else {
-		require('./static')(server);
-		vue(server);
+		require('./static')(app);
+		vue(app);
 	}
 };
