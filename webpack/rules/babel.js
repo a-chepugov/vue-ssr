@@ -1,5 +1,3 @@
-const cache = require('./cache');
-
 module.exports = function (isDevelopment, target, options, preloaders = []) {
 	let config = {
 		test: /\.js$/,
@@ -12,8 +10,5 @@ module.exports = function (isDevelopment, target, options, preloaders = []) {
 		]
 	};
 	config.use.splice(0, 0, ...preloaders);
-	if (isDevelopment) {
-		config.use.push(cache(target, 'babel'))
-	}
 	return config
 };
