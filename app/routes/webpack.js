@@ -16,13 +16,26 @@ const clientWebpackConfig = require('../../webpack.js')({target: 'web'});
 const serverWebpackConfig = require('../../webpack.js')({target: 'node'});
 const clientCompiler = webpack(clientWebpackConfig);
 const serverCompiler = webpack(serverWebpackConfig);
-const clientDevMiddleware = webpackDevMiddleware(clientCompiler);
+const clientDevMiddleware = webpackDevMiddleware(clientCompiler, {
+		hot: true,
+		stats: {
+			colors: true,
+		},
+		historyApiFallback: true,
+	});
 const clientHotMiddleware = webpackHotMiddleware(clientCompiler, {
 	log: console.log,
 	path: `${publicPath}${__webpack_hmr}`,
 	heartbeat
 });
-const serverDevMiddleware = webpackDevMiddleware(serverCompiler);
+const serverDevMiddleware = webpackDevMiddleware(serverCompiler, {
+	serverSideRender: true,
+	hot: true,
+	stats: {
+		colors: true,
+	},
+	historyApiFallback: true,
+});
 
 const staticPattert = new RegExp(`^${publicPath.replace('([/])', '\$1')}`);
 
