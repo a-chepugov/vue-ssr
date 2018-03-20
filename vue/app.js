@@ -18,6 +18,9 @@ import deviceChecker from './mixins/deviceChecker';
 
 Vue.mixin(mixinsGlobal);
 
+Vue.component('no-ssr', require('./components/_aux/no-ssr').default);
+Vue.component('vue-fw', require('./components/_aux/functional-wrapper').default);
+
 export default function createApp() {
 	const router = createRouter();
 	const store = createStore();
