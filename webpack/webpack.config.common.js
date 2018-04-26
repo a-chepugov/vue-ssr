@@ -1,10 +1,6 @@
 const path = require('path');
 const config = require('config');
 const {VueLoaderPlugin} = require('vue-loader');
-const DefinePlugin = require('./plugins/DefinePlugin');
-const CleanWebpackPlugin = require('./plugins/CleanWebpackPlugin');
-
-const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
 
 const vueRule = require('./rules/vue');
 const babelRule = require('./rules/babel');
@@ -46,7 +42,7 @@ module.exports = function (env = {}) {
 
 	let plugins = [
 		new VueLoaderPlugin(),
-		DefinePlugin({
+		require('./plugins/DefinePlugin')({
 			'TARGET': JSON.stringify(target),
 			'process.env': {
 				NODE_ENV: `"${NODE_ENV}"` // Запись должна быть именно с такой конфигурацией кавычек
@@ -56,19 +52,7 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			plugins.push(
-				new HardSourceWebpackPlugin({
-					cacheDirectory: './node_modules/.cache/hard-source/[confighash]',
-					configHash: function(webpackConfig) {
-						return require('node-object-hash')({sort: false}).hash(webpackConfig);
-					},
-					environmentHash: {
-						root: process.cwd(),
-						directories: [],
-						files: ['package-lock.json', 'yarn.lock'],
-					},
-				}),
-			);
+			plugins.push(require('./plugins/HardSourceWebpackPlugin')());
 			break;
 		}
 		case PRODUCTION: {
@@ -79,9 +63,13 @@ module.exports = function (env = {}) {
 	const projectPath = path.resolve('.');
 	const bundlePathName = config.webpack.bundles[target];
 
-	clean ?
-		plugins.push(CleanWebpackPlugin(projectPath, [bundlePathName])) :
-		undefined;
+	if(clean){
+		try {
+			plugins.push(require('./plugins/CleanWebpackPlugin')(projectPath, [bundlePathName]))
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
 	return {
 		module: {

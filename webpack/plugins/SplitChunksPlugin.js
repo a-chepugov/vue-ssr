@@ -1,5 +1,3 @@
+"use strict";
 const webpack = require('webpack');
-module.exports = function (option) {
-	let q = new webpack.optimize.SplitChunksPlugin(option);
-	return q
-};
+module.exports = (options) => new webpack.optimize.SplitChunksPlugin(options);

@@ -6,7 +6,6 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 const commonConfig = require('./webpack.config.common.js');
 const getDefaultValues = require('./getDefaultValues');
-
 const SplitChunksPlugin = require('./plugins/SplitChunksPlugin');
 
 module.exports = function (env = {}) {
@@ -25,10 +24,13 @@ module.exports = function (env = {}) {
 	const bundlePath = path.resolve(bundlePathName);
 	const publicPath = config.webpack.publicPath;
 
-	let plugins = [
-		new VueSSRClientPlugin(),
-		SplitChunksPlugin({name: 'runtime', minChunks: Infinity}),
-	];
+	let plugins = [];
+
+	try {
+		plugins.push(new VueSSRClientPlugin());
+	} catch (error) {
+		console.error(error);
+	}
 
 	let entry = {
 		index: [
@@ -37,24 +39,24 @@ module.exports = function (env = {}) {
 		vendor: ['vue'],
 	};
 
-	switch (NODE_ENV) {
-		case DEVELOPMENT: {
-			entry.index.unshift(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
-			plugins = plugins.concat(
-				new webpack.HotModuleReplacementPlugin(),
-			);
-			break;
+	try {
+		switch (NODE_ENV) {
+			case DEVELOPMENT: {
+				entry.index.unshift(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
+				plugins.push(new webpack.HotModuleReplacementPlugin());
+				break;
+			}
+			case PRODUCTION: {
+				plugins.push(require('./plugins/UglifyJsPlugin')());
+				plugins.push(SplitChunksPlugin({name: 'common',   chunks: "async",}));
+				break;
+			}
 		}
-		case PRODUCTION: {
-			plugins = plugins.concat(
-				SplitChunksPlugin({name: 'common'}),
-			);
-			break;
-		}
+	} catch (error) {
+		console.error(error);
 	}
-
-
 	return merge(commonConfig(env), {
+		optimization: {runtimeChunk: true},
 		context: path.join(__dirname),
 		entry,
 		output: {
