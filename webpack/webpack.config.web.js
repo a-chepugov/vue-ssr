@@ -10,7 +10,6 @@ module.exports = function (env = {}) {
 	const {
 		NODE_ENV,
 		DEVELOPMENT,
-		isDevelopment,
 		PRODUCTION,
 	} = require('./getDefaultValues')(env);
 
@@ -41,7 +40,7 @@ module.exports = function (env = {}) {
 		switch (NODE_ENV) {
 			case DEVELOPMENT: {
 				entry.index.unshift(`webpack-hot-middleware/client?path=${__webpack_hmr}&timeout=${heartbeat}&name=${target}&reload=true&dynamicPublicPath=true`);
-				plugins.push(new webpack.HotModuleReplacementPlugin());
+				plugins.push(require('./plugins/HotModuleReplacementPlugin')());
 				break;
 			}
 			case PRODUCTION: {
