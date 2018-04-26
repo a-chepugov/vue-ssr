@@ -11,4 +11,7 @@ export default {
 	computed: {
 		...mapGetters({count: 'z_test/get'}),
 	},
+	mounted(){
+		console.log('mounted');
+	}
 };
