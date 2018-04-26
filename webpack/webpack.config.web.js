@@ -46,7 +46,8 @@ module.exports = function (env = {}) {
 			}
 			case PRODUCTION: {
 				plugins.push(require('./plugins/UglifyJsPlugin')());
-				plugins.push(require('./plugins/SplitChunksPlugin')({name: 'common',   chunks: "async",}));
+				plugins.push(require('./plugins/SplitChunksPlugin')({name: 'common',   chunks: "async"}));
+				plugins.push(require('./plugins/CompressionPlugin')());
 				break;
 			}
 		}
