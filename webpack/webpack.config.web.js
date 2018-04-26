@@ -8,7 +8,6 @@ const commonConfig = require('./webpack.config.common.js');
 const getDefaultValues = require('./getDefaultValues');
 
 const SplitChunksPlugin = require('./plugins/SplitChunksPlugin');
-const ClosureCompilerPlugin = require('./plugins/ClosureCompilerPlugin');
 
 module.exports = function (env = {}) {
 	const {
@@ -49,7 +48,6 @@ module.exports = function (env = {}) {
 		case PRODUCTION: {
 			plugins = plugins.concat(
 				SplitChunksPlugin({name: 'common'}),
-				ClosureCompilerPlugin(),
 			);
 			break;
 		}
