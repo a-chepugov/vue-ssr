@@ -1,4 +1,3 @@
-import {mapActions, mapMutations} from 'vuex';
 import Page1_1 from './Page1_1/index.vue';
 
 export default {
@@ -14,9 +13,10 @@ export default {
 		}
 	},
 	created: function () {
-		var vm = this;
+		const vm = this;
 		setInterval(function () {
 			vm.counter += 0.1
-		}, 100)
+		}, 100);
+		console.log('created');
 	}
 };
