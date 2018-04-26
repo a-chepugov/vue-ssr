@@ -1,5 +1,6 @@
 "use strict";
-module.exports = () => {
+const HardSourceWebpackPlugin = require('hard-source-webpack-plugin');
+module.exports = () =>
 	new HardSourceWebpackPlugin({
 		cacheDirectory: './node_modules/.cache/hard-source/[confighash]',
 		configHash: function (webpackConfig) {
@@ -10,5 +11,4 @@ module.exports = () => {
 			directories: [],
 			files: ['package-lock.json', 'yarn.lock'],
 		},
-	})
-};
+	});

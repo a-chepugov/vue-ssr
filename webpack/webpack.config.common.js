@@ -34,48 +34,43 @@ module.exports = function (env = {}) {
 		imagesRule()
 	];
 
-	const devtool = isDevelopment ? 'cheap-module-eval-source-map' : 'source-map';
-	const watch = isDevelopment;
-	const mode = isProduction ? 'production' : 'development';
+	let plugins = [];
 
-	let plugins = [
-		new VueLoaderPlugin(),
-		require('./plugins/DefinePlugin')({
+	try {
+		plugins.push(new VueLoaderPlugin());
+		plugins.push(require('./plugins/DefinePlugin')({
 			'TARGET': JSON.stringify(target),
 			'process.env': {
 				NODE_ENV: `"${NODE_ENV}"` // Запись должна быть именно с такой конфигурацией кавычек
 			}
-		}),
-	];
+		}));
 
-	switch (NODE_ENV) {
-		case DEVELOPMENT: {
-			plugins.push(require('./plugins/HardSourceWebpackPlugin')());
-			break;
+		switch (NODE_ENV) {
+			case DEVELOPMENT: {
+				plugins.push(require('./plugins/HardSourceWebpackPlugin')());
+				break;
+			}
+			case PRODUCTION: {
+				break;
+			}
 		}
-		case PRODUCTION: {
-			break;
-		}
-	}
 
-	const projectPath = path.resolve('.');
-	const bundlePathName = config.webpack.bundles[target];
-
-	if(clean){
-		try {
+		if (clean) {
+			const projectPath = path.resolve('.');
+			const bundlePathName = config.webpack.bundles[target];
 			plugins.push(require('./plugins/CleanWebpackPlugin')(projectPath, [bundlePathName]))
-		} catch (error) {
-			console.error(error);
 		}
+	} catch (error) {
+		console.error(error);
 	}
 
 	return {
 		module: {
 			rules
 		},
-		devtool,
-		watch,
 		plugins,
-		mode
+		devtool: isDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
+		watch: isDevelopment,
+		mode: isProduction ? 'production' : 'development'
 	};
 };
