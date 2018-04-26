@@ -6,7 +6,6 @@ module.exports = {
 		heartbeat: 3000,
 		bundles: {
 			// Добавить эти директории в игнорируемые сервером, для корректной работы hot-update - supervisor -i ./builds index.js
-			cache: 'builds/.cache',
 			web: 'builds/public',
 			node: 'builds/server',
 			api: 'builds/api.json',
