@@ -1,5 +1,8 @@
 import Page1_1 from './Page1_1/index.vue';
 
+import q from '../../../helpers/wasmLoader';
+
+
 export default {
 	init() {
 		console.log('Инициализация корневого компонента');

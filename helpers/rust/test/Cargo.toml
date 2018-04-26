@@ -1,0 +1,7 @@
+[package]
+authors = ["Alexey Chapugov <a.chepugov@gmail.com>"]
+name = "test"
+version = "0.0.1"
+
+[lib]
+crate-type = ["cdylib"]

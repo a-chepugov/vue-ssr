@@ -4,6 +4,7 @@ const {VueLoaderPlugin} = require('vue-loader');
 
 const vueRule = require('./rules/vue');
 const babelRule = require('./rules/babel');
+const rust2wasmRule = require('./rules/rust2wasm');
 const fontsRule = require('./rules/url-fonts');
 const imagesRule = require('./rules/url-images');
 
@@ -30,6 +31,7 @@ module.exports = function (env = {}) {
 	let rules = [
 		vueRule(isDevelopment, target, vueOptions),
 		babelRule(isDevelopment, target, babelOptions, babelPreloaders),
+		rust2wasmRule(isProduction),
 		fontsRule(),
 		imagesRule()
 	];
