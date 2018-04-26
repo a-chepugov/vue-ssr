@@ -28,6 +28,8 @@ module.exports = function (env = {}) {
 		resolve: {
 			modules: ['node_modules', 'bower_components'],
 			descriptionFiles: ['package.json', 'bower.json'],
-		}
+		},
+		parallelism: 4,
+		bail: true
 	})
 };

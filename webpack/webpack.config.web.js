@@ -7,7 +7,7 @@ const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 const commonConfig = require('./webpack.config.common.js');
 const getDefaultValues = require('./getDefaultValues');
 
-const CommonsChunkPlugin = require('./plugins/CommonsChunkPlugin');
+const SplitChunksPlugin = require('./plugins/SplitChunksPlugin');
 const ClosureCompilerPlugin = require('./plugins/ClosureCompilerPlugin');
 
 module.exports = function (env = {}) {
@@ -28,7 +28,7 @@ module.exports = function (env = {}) {
 
 	let plugins = [
 		new VueSSRClientPlugin(),
-		CommonsChunkPlugin({name: 'runtime', minChunks: Infinity}),
+		SplitChunksPlugin({name: 'runtime', minChunks: Infinity}),
 	];
 
 	let entry = {
@@ -48,12 +48,13 @@ module.exports = function (env = {}) {
 		}
 		case PRODUCTION: {
 			plugins = plugins.concat(
-				CommonsChunkPlugin({name: 'common'}),
+				SplitChunksPlugin({name: 'common'}),
 				ClosureCompilerPlugin(),
 			);
 			break;
 		}
 	}
+
 
 	return merge(commonConfig(env), {
 		context: path.join(__dirname),

@@ -1,8 +1,6 @@
 const path = require('path');
 const config = require('config');
-
-const WriteFilePlugin = require('write-file-webpack-plugin');
-
+const {VueLoaderPlugin} = require('vue-loader');
 const DefinePlugin = require('./plugins/DefinePlugin');
 const CleanWebpackPlugin = require('./plugins/CleanWebpackPlugin');
 
@@ -18,7 +16,7 @@ const getDefaultValues = require('./getDefaultValues');
 module.exports = function (env = {}) {
 	let {clean, target} = env;
 
-	let {NODE_ENV, isDevelopment, DEVELOPMENT, PRODUCTION} = getDefaultValues(env);
+	let {NODE_ENV, isDevelopment, isProduction, DEVELOPMENT, PRODUCTION} = getDefaultValues(env);
 
 	let vueOptions = {
 		preLoaders: {
@@ -42,10 +40,12 @@ module.exports = function (env = {}) {
 		imagesRule()
 	];
 
-	let devtool = isDevelopment ? 'cheap-module-eval-source-map' : 'source-map';
-	let watch = isDevelopment;
+	const devtool = isDevelopment ? 'cheap-module-eval-source-map' : 'source-map';
+	const watch = isDevelopment;
+	const mode = isProduction ? 'production' : 'development';
 
 	let plugins = [
+		new VueLoaderPlugin(),
 		DefinePlugin({
 			'TARGET': JSON.stringify(target),
 			'process.env': {
@@ -56,11 +56,9 @@ module.exports = function (env = {}) {
 
 	switch (NODE_ENV) {
 		case DEVELOPMENT: {
-			// plugins.push(new WriteFilePlugin());
 			plugins.push(
 				new HardSourceWebpackPlugin({
 					cacheDirectory: './node_modules/.cache/hard-source/[confighash]',
-					recordsPath: './node_modules/.cache/hard-source/[confighash]/records.json',
 					configHash: function(webpackConfig) {
 						return require('node-object-hash')({sort: false}).hash(webpackConfig);
 					},
@@ -92,5 +90,6 @@ module.exports = function (env = {}) {
 		devtool,
 		watch,
 		plugins,
+		mode
 	};
 };

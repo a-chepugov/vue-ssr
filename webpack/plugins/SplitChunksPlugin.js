@@ -1,5 +1,5 @@
 const webpack = require('webpack');
-
 module.exports = function (option) {
-	return new webpack.optimize.CommonsChunkPlugin(option)
+	let q = new webpack.optimize.SplitChunksPlugin(option);
+	return q
 };
