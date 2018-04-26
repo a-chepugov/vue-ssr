@@ -7,12 +7,10 @@ const babelRule = require('./rules/babel');
 const fontsRule = require('./rules/url-fonts');
 const imagesRule = require('./rules/url-images');
 
-const getDefaultValues = require('./getDefaultValues');
-
 module.exports = function (env = {}) {
 	let {clean, target} = env;
 
-	let {NODE_ENV, isDevelopment, isProduction, DEVELOPMENT, PRODUCTION} = getDefaultValues(env);
+	let {NODE_ENV, isDevelopment, isProduction, DEVELOPMENT, PRODUCTION} = require('./getDefaultValues')(env);
 
 	let vueOptions = {
 		preLoaders: {

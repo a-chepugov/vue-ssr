@@ -5,8 +5,6 @@ const merge = require('webpack-merge');
 const VueSSRClientPlugin = require('vue-server-renderer/client-plugin');
 
 const commonConfig = require('./webpack.config.common.js');
-const getDefaultValues = require('./getDefaultValues');
-const SplitChunksPlugin = require('./plugins/SplitChunksPlugin');
 
 module.exports = function (env = {}) {
 	const {
@@ -14,7 +12,7 @@ module.exports = function (env = {}) {
 		DEVELOPMENT,
 		isDevelopment,
 		PRODUCTION,
-	} = getDefaultValues(env);
+	} = require('./getDefaultValues')(env);
 
 	let {target} = env;
 
@@ -48,7 +46,7 @@ module.exports = function (env = {}) {
 			}
 			case PRODUCTION: {
 				plugins.push(require('./plugins/UglifyJsPlugin')());
-				plugins.push(SplitChunksPlugin({name: 'common',   chunks: "async",}));
+				plugins.push(require('./plugins/SplitChunksPlugin')({name: 'common',   chunks: "async",}));
 				break;
 			}
 		}
