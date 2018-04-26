@@ -13,6 +13,6 @@ module.exports = {
 		},
 	},
 	server: {
-		port: process.env.NODE_APP_INSTANCE || 5000
+		port: process.env.NODE_APP_INSTANCE || 9999
 	},
 };
