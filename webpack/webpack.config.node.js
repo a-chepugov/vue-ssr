@@ -25,10 +25,6 @@ module.exports = function (env = {}) {
 		plugins: [
 			new VueSSRServerPlugin(),
 		],
-		resolve: {
-			modules: ['node_modules', 'bower_components'],
-			descriptionFiles: ['package.json', 'bower.json'],
-		},
 		parallelism: 4,
 		bail: true
 	})

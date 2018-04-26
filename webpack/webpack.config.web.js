@@ -45,7 +45,6 @@ module.exports = function (env = {}) {
 			}
 			case PRODUCTION: {
 				plugins.push(require('./plugins/UglifyJsPlugin')());
-				plugins.push(require('./plugins/SplitChunksPlugin')({name: 'common',   chunks: "async"}));
 				plugins.push(require('./plugins/CompressionPlugin')());
 				break;
 			}
@@ -54,7 +53,6 @@ module.exports = function (env = {}) {
 		console.error(error);
 	}
 	return merge(commonConfig(env), {
-		optimization: {runtimeChunk: true},
 		context: path.join(__dirname),
 		entry,
 		output: {
@@ -65,10 +63,6 @@ module.exports = function (env = {}) {
 			publicPath,
 		},
 		target: 'web',
-		resolve: {
-			modules: ['node_modules', 'bower_components'],
-			descriptionFiles: ['package.json', 'bower.json'],
-		},
 		plugins
 	})
 };

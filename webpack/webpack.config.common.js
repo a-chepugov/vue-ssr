@@ -69,6 +69,10 @@ module.exports = function (env = {}) {
 			rules
 		},
 		plugins,
+		resolve: {
+			modules: ['node_modules', 'bower_components'],
+			descriptionFiles: ['package.json', 'bower.json'],
+		},
 		devtool: isDevelopment ? 'cheap-module-eval-source-map' : 'source-map',
 		watch: isDevelopment,
 		mode: isProduction ? 'production' : 'development'
