@@ -7,7 +7,7 @@
 		"start:production": "NODE_ENV=production supervisor index.js",
 		"webpack:web:production": "NODE_ENV=production webpack --config webpack --env.target=web --env.clean=true --hide-modules",
 		"webpack:node:production": "NODE_ENV=production webpack --config webpack --env.target=node --env.clean=true --hide-modules",
-		"start:development": "NODE_ENV=development supervisor -i ./builds,./vue index.js",
+		"start:development": "NODE_ENV=development supervisor -i ./build,./vue index.js",
 		"webpack:web:development": "NODE_ENV=development webpack --config webpack --env.target=web --env.clean=true --hide-modules",
 		"webpack:node:development": "NODE_ENV=development webpack --config webpack --env.target=node --env.clean=true --hide-modules",
 		"webpack:web:development:profile": "NODE_ENV=development webpack --config webpack --env.target=web --env.clean=true --progress --profile --display-modules --display-reasons",
