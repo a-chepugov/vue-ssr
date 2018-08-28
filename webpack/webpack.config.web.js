@@ -54,12 +54,6 @@ module.exports = function (env = {}) {
 		console.error(error);
 	}
 	return merge(commonConfig(env), {
-		optimization: {
-			runtimeChunk: true,
-			splitChunks: {
-				name: true,
-			},
-		},
 		context: path.join(__dirname),
 		entry,
 		output: {
@@ -70,6 +64,12 @@ module.exports = function (env = {}) {
 			publicPath,
 		},
 		target: 'web',
-		plugins
+		plugins,
+		optimization: {
+			runtimeChunk: true,
+			splitChunks: {
+				name: true,
+			}
+		}
 	})
 };
