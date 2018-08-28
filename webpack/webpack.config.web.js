@@ -31,6 +31,7 @@ module.exports = function (env = {}) {
 
 	let entry = {
 		index: [
+			'intersection-observer',
 			'../vue/entry-web.js',
 		],
 		vendor: ['vue'],
